@@ -1,23 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecipeStore } from './recipeStore';
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBar';           // Assuming SearchBar exists
+import FavoritesList from './FavoritesList';
+import RecommendationsList from './RecommendationsList';
 
 export default function RecipeList() {
-  const filteredRecipes = useRecipeStore(state => state.filteredRecipes);
+  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
 
   return (
     <div>
       <h1>Recipes</h1>
+
       <SearchBar />
+
       {filteredRecipes.length === 0 && <p>No recipes found.</p>}
-      {filteredRecipes.map(recipe => (
+
+      {filteredRecipes.map((recipe) => (
         <div key={recipe.id}>
           <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
-          <Link to="/add">Add New Recipe</Link>
-
         </div>
       ))}
+
+      <hr />
+
+      <FavoritesList />
+      <RecommendationsList />
     </div>
   );
 }

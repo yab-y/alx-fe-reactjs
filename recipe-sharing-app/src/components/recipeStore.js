@@ -3,8 +3,28 @@ import { create } from 'zustand';
 export const useRecipeStore = create((set, get) => ({
   recipes: [],
 
-  searchTerm: '',
-  setSearchTerm: (term) => set({ searchTerm: term }),
+  favorites: [],
+  addFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.includes(recipeId)
+        ? state.favorites
+        : [...state.favorites, recipeId],
+    })),
+
+  removeFavorite: (recipeId) =>
+    set((state) => ({
+      favorites: state.favorites.filter((id) => id !== recipeId),
+    })),
+
+  recommendations: [],
+  generateRecommendations: () =>
+    set((state) => {
+      const recommended = state.recipes.filter(
+        (recipe) => !state.favorites.includes(recipe.id)
+      );
+      const shuffled = recommended.sort(() => 0.5 - Math.random());
+      return { recommendations: shuffled.slice(0, 3) };
+    }),
 
   addRecipe: (recipe) =>
     set((state) => ({
@@ -22,6 +42,9 @@ export const useRecipeStore = create((set, get) => ({
     set((state) => ({
       recipes: state.recipes.filter((recipe) => recipe.id !== id),
     })),
+
+  searchTerm: '',
+  setSearchTerm: (term) => set({ searchTerm: term }),
 
   get filteredRecipes() {
     const { recipes, searchTerm } = get();
