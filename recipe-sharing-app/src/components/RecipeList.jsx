@@ -14,6 +14,8 @@ export default function RecipeList() {
       {filteredRecipes.map(recipe => (
         <div key={recipe.id}>
           <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
+          <Link to="/add">Add New Recipe</Link>
+
         </div>
       ))}
     </div>
