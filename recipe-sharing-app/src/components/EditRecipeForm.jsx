@@ -6,25 +6,27 @@ export default function EditRecipeForm({ recipe }) {
   const [title, setTitle] = useState(recipe.title);
   const [description, setDescription] = useState(recipe.description);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault(); // ✅ Prevents page reload
+
     updateRecipe(recipe.id, { title, description });
-    alert("Recipe updated!");
+    alert('Recipe updated successfully!');
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h3>Edit Recipe</h3>
       <input
+        type="text"
+        placeholder="Recipe title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
         required
       />
       <textarea
+        placeholder="Recipe description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description"
         required
       ></textarea>
       <button type="submit">Save Changes</button>
