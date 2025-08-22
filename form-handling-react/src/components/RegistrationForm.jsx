@@ -1,90 +1,71 @@
-// alx-fe-reactjs/form-handling-react/src/components/RegistrationForm.jsx
-import { useState } from 'react';
-import { registerUser } from '../services/api';
+import { useState } from "react";
+import { registerUser } from "../services/api";
 
 export default function RegistrationForm() {
-  const [values, setValues] = useState({ username: '', email: '', password: '' });
+  const [values, setValues] = useState({ username: "", email: "", password: "" });
   const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState(null);  // success or error message
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setValues(v => ({ ...v, [name]: value }));
-  }
+    setValues((prev) => ({ ...prev, [name]: value }));
+  };
 
-  function validate() {
+  const validate = () => {
     const errs = {};
-    if (!values.username.trim()) errs.username = 'Username is required';
-    if (!values.email.trim()) errs.email = 'Email is required';
-    if (!values.password.trim()) errs.password = 'Password is required';
+    if (!values.username.trim()) errs.username = "Username required";
+    if (!values.email.trim()) errs.email = "Email required";
+    if (!values.password.trim()) errs.password = "Password required";
     return errs;
-  }
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setResult(null);
-    const v = validate();
-    setErrors(v);
-    if (Object.keys(v).length > 0) return;
+    setStatus(null);
+    const errs = validate();
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
 
     try {
       setSubmitting(true);
-      // Only email & password are used by the demo API
       const data = await registerUser({ email: values.email, password: values.password });
-      setResult({ ok: true, message: `Registered! token: ${data.token}` });
-      setValues({ username: '', email: '', password: '' });
+      setStatus({ ok: true, msg: `Success! token: ${data.token}` });
+      setValues({ username: "", email: "", password: "" });
     } catch (err) {
-      setResult({ ok: false, message: err.message });
+      setStatus({ ok: false, msg: err.message });
     } finally {
       setSubmitting(false);
     }
-  }
+  };
 
   return (
-    <div className="card">
-      <h2>Controlled Registration Form</h2>
-      <p className="muted">
-        Tip: For a successful mock call, try email <code>eve.holt@reqres.in</code> and any password (e.g., <code>pistol</code>).
-      </p>
-      <form onSubmit={handleSubmit} noValidate>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            id="username" name="username" type="text"
-            value={values.username} onChange={handleChange} placeholder="your_username"
-          />
-          {errors.username && <div className="error">{errors.username}</div>}
+    <div>
+      <h2>Controlled Form</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username</label>
+          <input name="username" value={values.username} onChange={handleChange} />
+          {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email" name="email" type="email"
-            value={values.email} onChange={handleChange} placeholder="you@example.com"
-          />
-          {errors.email && <div className="error">{errors.email}</div>}
+        <div>
+          <label>Email</label>
+          <input name="email" type="email" value={values.email} onChange={handleChange} />
+          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         </div>
 
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password" name="password" type="password"
-            value={values.password} onChange={handleChange} placeholder="••••••••"
-          />
-          {errors.password && <div className="error">{errors.password}</div>}
+        <div>
+          <label>Password</label>
+          <input name="password" type="password" value={values.password} onChange={handleChange} />
+          {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
         </div>
 
-        <button disabled={submitting} type="submit">
-          {submitting ? 'Submitting...' : 'Register'}
+        <button type="submit" disabled={submitting}>
+          {submitting ? "Registering..." : "Register"}
         </button>
       </form>
-
-      {result && (
-        <div className={result.ok ? 'success' : 'error-banner'}>
-          {result.message}
-        </div>
-      )}
+      {status && <p style={{ color: status.ok ? "green" : "red" }}>{status.msg}</p>}
     </div>
   );
 }
