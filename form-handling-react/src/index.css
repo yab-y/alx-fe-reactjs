@@ -1,0 +1,111 @@
+/* alx-fe-reactjs/form-handling-react/src/index.css */
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+  background: #0b1020;
+  color: #e7e9ee;
+}
+
+.container {
+  max-width: 720px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.switcher {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.switcher button {
+  border: 1px solid #2b3250;
+  background: #121735;
+  color: #e7e9ee;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.switcher button.active {
+  border-color: #4a7dff;
+  box-shadow: 0 0 0 2px rgba(74,125,255,0.2);
+}
+
+.card {
+  background: #0f1533;
+  border: 1px solid #1e2547;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.muted {
+  color: #a8afc5;
+  font-size: 0.9rem;
+}
+
+.form-group {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+label {
+  font-weight: 600;
+}
+
+input {
+  background: #0b1028;
+  border: 1px solid #1d2547;
+  color: #e7e9ee;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #4a7dff;
+  box-shadow: 0 0 0 2px rgba(74,125,255,0.2);
+}
+
+button[type="submit"] {
+  margin-top: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid #2b3250;
+  background: #1a2350;
+  color: #e7e9ee;
+  cursor: pointer;
+}
+
+.error {
+  color: #ff869e;
+  font-size: 0.9rem;
+}
+
+.error-banner {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #4a1120;
+  background: #2a0e1a;
+  color: #ffbac6;
+  border-radius: 10px;
+}
+
+.success {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #0d3d1f;
+  background: #0c2217;
+  color: #9ee6b2;
+  border-radius: 10px;
+}
