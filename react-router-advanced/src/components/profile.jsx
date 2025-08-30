@@ -8,6 +8,7 @@ function Profile() {
         <Link to="details">Details</Link> |{" "}
         <Link to="settings">Settings</Link>
       </nav>
+      {/* Nested routes render here */}
       <Outlet />
     </div>
   );
